@@ -42,10 +42,10 @@ driverController = pygame.joystick.Joystick(0) if pygame.joystick.get_count() > 
 
 
 def turn_in_place():
-    leftTopModule.rotate(135)
-    leftBottomModule.rotate(45)
-    rightTopModule.rotate(45)
-    rightBottomModule.rotate(135)
+    leftTopModule.rotate(45)
+    leftBottomModule.rotate(135)
+    rightTopModule.rotate(135)
+    rightBottomModule.rotate(45)
 
 
 while running:
@@ -68,11 +68,19 @@ while running:
         leftJoystick.set_position((strafe * 30, forward * 30))
         rightJoystick.set_position((turn * 30, driverController.get_axis(3) * 30))
 
-    globalAngle = 360 - math.degrees(math.atan2(-forward, strafe)) if strafe != 0 else 0
+    globalAngle = math.degrees(math.atan2(-forward, strafe)) if strafe != 0 else 0
+
+    if globalAngle < 0:
+        globalAngle = globalAngle + 360
+
+    else:
+        globalAngle = globalAngle
+
+    print(globalAngle)
     magnitude = math.sqrt(forward ** 2 + strafe ** 2)
 
     # swerve calculations
-    if magnitude > 0.01:
+    if magnitude > 0.2:
         leftTopModule.rotate(globalAngle)
         leftBottomModule.rotate(globalAngle)
         rightTopModule.rotate(globalAngle)

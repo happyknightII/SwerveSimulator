@@ -58,6 +58,6 @@ class SwerveModule(pygame.sprite.Sprite):
         self.angle += velocity
 
     def update(self):
-        self.image = pygame.transform.rotate(self.sourceImage, self.angle)
+        self.image = pygame.transform.rotate(self.sourceImage, self.angle+90)
         self.rect = self.image.get_rect()
         self.rect.center = self.position
