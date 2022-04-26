@@ -28,6 +28,9 @@ class SwerveModule(pygame.sprite.Sprite):
                                      size * BORDER_SIZE,
                                      size * (ASPECT_RATIO - 2 * BORDER_SIZE),
                                      size * (1 - 2 * BORDER_SIZE)))
+        pygame.draw.circle(self.sourceImage, BORDER_COLOR, (size / 2 * ASPECT_RATIO, size / 8),
+                           size / 8)
+
         self.image = self.sourceImage
         self.rect = self.sourceImage.get_rect()
         self.position = pos
