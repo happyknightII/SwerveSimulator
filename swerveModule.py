@@ -10,7 +10,7 @@ BORDER_SIZE = 0.04  # Percent
 ASPECT_RATIO = 0.35
 
 KP_ADJUST_ROTATION = 0.1
-MAX_TURN_SPEED = 1
+MAX_TURN_SPEED = 15
 
 
 # Object class
@@ -49,9 +49,11 @@ class SwerveModule(pygame.sprite.Sprite):
         flipped_error = self.closest_angle(angle, self.angle + 180)
 
         if abs(error) > abs(flipped_error):
-            velocity = KP_ADJUST_ROTATION * error
-        else:
             velocity = KP_ADJUST_ROTATION * flipped_error
+            print("reversed")
+        else:
+            velocity = KP_ADJUST_ROTATION * error
+            print("forward")
 
         # Simulation stuffs
         self.angle %= 360
