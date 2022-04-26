@@ -14,19 +14,26 @@ pygame.joystick.init()
 screen = pygame.display.set_mode([1000, 1000])
 
 # Run until the user asks to quit
+clock = pygame.time.Clock()
 running = True
+
+
 allSpriteGroup = pygame.sprite.Group()
 swerveGroup = pygame.sprite.Group()
+
 leftTopModule = SwerveModule(100, (350, 350))
 leftBottomModule = SwerveModule(100, (350, 350 + 300))
 rightTopModule = SwerveModule(100, (350 + 300, 350))
 rightBottomModule = SwerveModule(100, (350 + 300, 350 + 300))
+
 swerveGroup.add(leftTopModule)
 swerveGroup.add(leftBottomModule)
 swerveGroup.add(rightTopModule)
 swerveGroup.add(rightBottomModule)
+
 leftJoystick = JoystickVisual(200, (200, 800))
 rightJoystick = JoystickVisual(200, (800, 800))
+
 allSpriteGroup.add(leftJoystick)
 allSpriteGroup.add(rightJoystick)
 allSpriteGroup.add(swerveGroup)
@@ -78,6 +85,7 @@ while running:
     allSpriteGroup.update()
     allSpriteGroup.draw(screen)
     # Flip the display
+    clock.tick(60)
     pygame.display.flip()
 
 # Done! Time to quit.
