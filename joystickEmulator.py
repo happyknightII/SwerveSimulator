@@ -26,7 +26,7 @@ class JoystickVisual(pygame.sprite.Sprite):
         self.rect.center = pos
         self.input = (0, 0)
 
-    def setPosition(self, cords):
+    def set_position(self, cords):
         self.input = cords
 
     def update(self):
