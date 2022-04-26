@@ -6,6 +6,7 @@ import math
 import pygame
 from joystickEmulator import JoystickVisual
 from swerveModule import SwerveModule
+
 pygame.init()
 pygame.joystick.init()
 
@@ -32,11 +33,13 @@ allSpriteGroup.add(swerveGroup)
 
 driverController = pygame.joystick.Joystick(0) if pygame.joystick.get_count() > 0 else None
 
+
 def turn_in_place():
     leftTopModule.rotate(135)
     leftBottomModule.rotate(45)
     rightTopModule.rotate(45)
     rightBottomModule.rotate(135)
+
 
 while running:
 
@@ -62,10 +65,10 @@ while running:
     magnitude = math.sqrt(forward ** 2 + strafe ** 2)
 
     if magnitude > 0:
-        leftTopModule       .rotate(globalAngle)
-        leftBottomModule    .rotate(globalAngle)
-        rightTopModule      .rotate(globalAngle)
-        rightBottomModule   .rotate(globalAngle)
+        leftTopModule.rotate(globalAngle)
+        leftBottomModule.rotate(globalAngle)
+        rightTopModule.rotate(globalAngle)
+        rightBottomModule.rotate(globalAngle)
     else:
         turn_in_place()
 

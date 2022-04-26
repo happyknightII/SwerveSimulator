@@ -30,6 +30,6 @@ class JoystickVisual(pygame.sprite.Sprite):
         self.input = cords
 
     def update(self):
-        self.image = self.sourceImage
+        self.image = self.sourceImage.copy()
         pygame.draw.circle(self.image, BORDER_COLOR, (self.size / 2 + self.input[0], self.size / 2 + self.input[1]), self.size * JOYSTICK_RATIO)
         pygame.draw.circle(self.image, JOYSTICK_COLOR, (self.size / 2 + self.input[0], self.size / 2 + self.input[1]), self.size * JOYSTICK_RATIO * (1 - BORDER_SIZE))
