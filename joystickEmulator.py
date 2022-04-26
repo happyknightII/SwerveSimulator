@@ -31,5 +31,5 @@ class JoystickVisual(pygame.sprite.Sprite):
 
     def update(self):
         self.image = self.sourceImage
-        pygame.draw.circle(self.sourceImage, BORDER_COLOR, (self.size / 2 + self.input[0], self.size / 2 + self.input[1]), self.size * JOYSTICK_RATIO)
-        pygame.draw.circle(self.sourceImage, JOYSTICK_COLOR, (self.size / 2 + self.input[0], self.size / 2 + self.input[1]), self.size * JOYSTICK_RATIO * (1 - BORDER_SIZE))
+        pygame.draw.circle(self.image, BORDER_COLOR, (self.size / 2 + self.input[0], self.size / 2 + self.input[1]), self.size * JOYSTICK_RATIO)
+        pygame.draw.circle(self.image, JOYSTICK_COLOR, (self.size / 2 + self.input[0], self.size / 2 + self.input[1]), self.size * JOYSTICK_RATIO * (1 - BORDER_SIZE))
