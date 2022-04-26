@@ -68,9 +68,10 @@ while running:
         leftJoystick.set_position((strafe * 30, forward * 30))
         rightJoystick.set_position((turn * 30, driverController.get_axis(3) * 30))
 
-    globalAngle = math.degrees(math.atan(forward / strafe)) if strafe > 0 else 0
+    globalAngle = math.degrees(math.atan(forward / strafe)) if strafe == 0 else 0
     magnitude = math.sqrt(forward ** 2 + strafe ** 2)
 
+    # swerve calculations
     if magnitude > 0:
         leftTopModule.rotate(globalAngle)
         leftBottomModule.rotate(globalAngle)

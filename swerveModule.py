@@ -41,6 +41,7 @@ class SwerveModule(pygame.sprite.Sprite):
         return error
 
     def rotate(self, angle):
+        # math stuff
         error = self.closest_angle(angle, self.angle)
         flipped_error = self.closest_angle(angle, self.angle + 180)
 
