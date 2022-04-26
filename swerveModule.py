@@ -35,6 +35,8 @@ class SwerveModule(pygame.sprite.Sprite):
         self.rect = self.sourceImage.get_rect()
         self.position = pos
         self.rect.center = pos
+        self.isReversed = False
+
 
     @staticmethod
     def closest_angle(target, current):
@@ -50,10 +52,10 @@ class SwerveModule(pygame.sprite.Sprite):
 
         if abs(error) > abs(flipped_error):
             velocity = KP_ADJUST_ROTATION * flipped_error
-            print("reversed")
+            self.isReversed = True
         else:
             velocity = KP_ADJUST_ROTATION * error
-            print("forward")
+            self.isReversed = False
 
         # Simulation stuffs
         self.angle %= 360

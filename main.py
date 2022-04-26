@@ -47,6 +47,33 @@ def turn_in_place():
     rightTopModule.rotate(135)
     rightBottomModule.rotate(45)
 
+def turn_while_moving(globalAngle, turn):
+
+    turnAngle = turn*45
+
+    if 45 <= globalAngle < 135:
+        leftTopModule.rotate(globalAngle-turnAngle)
+        leftBottomModule.rotate(globalAngle+turnAngle)
+        rightTopModule.rotate(globalAngle-turnAngle)
+        rightBottomModule.rotate(globalAngle+turnAngle)
+
+    if 135 <= globalAngle < 225:
+        leftTopModule.rotate(globalAngle - turnAngle)
+        leftBottomModule.rotate(globalAngle - turnAngle)
+        rightTopModule.rotate(globalAngle + turnAngle)
+        rightBottomModule.rotate(globalAngle + turnAngle)
+
+    if 225 <= globalAngle < 315:
+        leftTopModule.rotate(globalAngle + turnAngle)
+        leftBottomModule.rotate(globalAngle - turnAngle)
+        rightTopModule.rotate(globalAngle + turnAngle)
+        rightBottomModule.rotate(globalAngle - turnAngle)
+
+    if globalAngle >= 315 or globalAngle < 45:
+        leftTopModule.rotate(globalAngle + turnAngle)
+        leftBottomModule.rotate(globalAngle + turnAngle)
+        rightTopModule.rotate(globalAngle - turnAngle)
+        rightBottomModule.rotate(globalAngle - turnAngle)
 
 while running:
 
@@ -78,15 +105,21 @@ while running:
     else:
         globalAngle = globalAngle
 
-    print(globalAngle)
     magnitude = math.sqrt(forward ** 2 + strafe ** 2)
 
     # swerve calculations
-    if magnitude > 0.2:
+    if magnitude > 0.2 and abs(turn) < 0.3:
         leftTopModule.rotate(globalAngle)
         leftBottomModule.rotate(globalAngle)
         rightTopModule.rotate(globalAngle)
         rightBottomModule.rotate(globalAngle)
+
+    elif abs(turn) > 0.3 and magnitude < 0.2:
+        turn_in_place()
+
+
+    elif abs(turn) > 0.3 and magnitude > 0.2:
+        turn_while_moving(globalAngle, turn)
     else:
         turn_in_place()
 
