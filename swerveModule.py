@@ -37,7 +37,7 @@ class SwerveModule(pygame.sprite.Sprite):
     def closest_angle(target, current):
         error = target - current
         if abs(error) > 180:
-            error = math.copysign(1, error) * 360 - error
+            error = -math.copysign(1, error) * 360 + error
         return error
 
     def rotate(self, angle):
