@@ -72,7 +72,7 @@ while running:
     magnitude = math.sqrt(forward ** 2 + strafe ** 2)
 
     # swerve calculations
-    if magnitude > 0:
+    if magnitude > 0.01:
         leftTopModule.rotate(globalAngle)
         leftBottomModule.rotate(globalAngle)
         rightTopModule.rotate(globalAngle)
