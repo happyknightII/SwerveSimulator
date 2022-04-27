@@ -17,8 +17,10 @@ class JoystickVisual(pygame.sprite.Sprite):
         # self.sourceImage.fill(BORDER_COLOR)
         self.sourceImage.set_colorkey(TRANSPARENT_COLOR)
 
-        pygame.draw.circle(self.sourceImage, BORDER_COLOR, (size / 2, size / 2), size / 2)
-        pygame.draw.circle(self.sourceImage, COLOR, (size / 2, size / 2), size / 2 * (1 - BORDER_SIZE))
+        pygame.draw.circle(self.sourceImage, BORDER_COLOR,
+                           (size / 2, size / 2), size / 2)
+        pygame.draw.circle(self.sourceImage, COLOR,
+                           (size / 2, size / 2), size / 2 * (1 - BORDER_SIZE))
 
         self.image = self.sourceImage
         self.rect = self.sourceImage.get_rect()
@@ -31,5 +33,9 @@ class JoystickVisual(pygame.sprite.Sprite):
 
     def update(self):
         self.image = self.sourceImage.copy()
-        pygame.draw.circle(self.image, BORDER_COLOR, (self.size / 2 + self.input[0], self.size / 2 + self.input[1]), self.size * JOYSTICK_RATIO)
-        pygame.draw.circle(self.image, JOYSTICK_COLOR, (self.size / 2 + self.input[0], self.size / 2 + self.input[1]), self.size * JOYSTICK_RATIO * (1 - BORDER_SIZE))
+        pygame.draw.circle(self.image, BORDER_COLOR, (self.size / 2 +
+                           self.input[0], self.size / 2 + self.input[1]),
+                           self.size * JOYSTICK_RATIO)
+        pygame.draw.circle(self.image, JOYSTICK_COLOR, (self.size / 2 +
+                           self.input[0], self.size / 2 + self.input[1]),
+                           self.size * JOYSTICK_RATIO * (1 - BORDER_SIZE))

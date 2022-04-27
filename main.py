@@ -1,10 +1,6 @@
-# Simple pygame program
-
-# Import and initialize the pygame library
-import math
-
 import pygame
 from joystickEmulator import JoystickVisual
+from swerveKinematics import SwerveKinematics
 from swerveModule import SwerveModule
 
 pygame.init()
@@ -26,6 +22,13 @@ leftBottomModule = SwerveModule(100, (350, 350 + 300))
 rightTopModule = SwerveModule(100, (350 + 300, 350))
 rightBottomModule = SwerveModule(100, (350 + 300, 350 + 300))
 
+kinematics = SwerveKinematics([
+    [-1, 1],
+    [-1, -1],
+    [1, 1],
+    [1, -1]
+])
+
 swerveGroup.add(leftTopModule)
 swerveGroup.add(leftBottomModule)
 swerveGroup.add(rightTopModule)
@@ -38,42 +41,8 @@ allSpriteGroup.add(leftJoystick)
 allSpriteGroup.add(rightJoystick)
 allSpriteGroup.add(swerveGroup)
 
-driverController = pygame.joystick.Joystick(0) if pygame.joystick.get_count() > 0 else None
-
-
-def turn_in_place():
-    leftTopModule.rotate(45)
-    leftBottomModule.rotate(135)
-    rightTopModule.rotate(135)
-    rightBottomModule.rotate(45)
-
-def turn_while_moving(globalAngle, turn):
-
-    turnAngle = turn*45
-
-    if 45 <= globalAngle < 135:
-        leftTopModule.rotate(globalAngle-turnAngle)
-        leftBottomModule.rotate(globalAngle+turnAngle)
-        rightTopModule.rotate(globalAngle-turnAngle)
-        rightBottomModule.rotate(globalAngle+turnAngle)
-
-    if 135 <= globalAngle < 225:
-        leftTopModule.rotate(globalAngle - turnAngle)
-        leftBottomModule.rotate(globalAngle - turnAngle)
-        rightTopModule.rotate(globalAngle + turnAngle)
-        rightBottomModule.rotate(globalAngle + turnAngle)
-
-    if 225 <= globalAngle < 315:
-        leftTopModule.rotate(globalAngle + turnAngle)
-        leftBottomModule.rotate(globalAngle - turnAngle)
-        rightTopModule.rotate(globalAngle + turnAngle)
-        rightBottomModule.rotate(globalAngle - turnAngle)
-
-    if globalAngle >= 315 or globalAngle < 45:
-        leftTopModule.rotate(globalAngle + turnAngle)
-        leftBottomModule.rotate(globalAngle + turnAngle)
-        rightTopModule.rotate(globalAngle - turnAngle)
-        rightBottomModule.rotate(globalAngle - turnAngle)
+driverController = pygame.joystick.Joystick(
+    0) if pygame.joystick.get_count() > 0 else None
 
 while running:
 
@@ -93,35 +62,17 @@ while running:
         strafe = driverController.get_axis(0)
         turn = driverController.get_axis(2)
         leftJoystick.set_position((strafe * 30, forward * 30))
-        rightJoystick.set_position((turn * 30, driverController.get_axis(3) * 30))
+        rightJoystick.set_position(
+            (turn * 30, driverController.get_axis(3) * 30))
 
-#Updated upstream
+    states = kinematics.calculate_module_states(-strafe, forward, turn)
 
-    globalAngle = math.degrees(math.atan2(-forward, strafe)) if strafe != 0 else 0
+    kinematics.scale_speeds(states)
 
-    if globalAngle < 0:
-        globalAngle = globalAngle + 360
-
-    else:
-        globalAngle = globalAngle
-
-    magnitude = math.sqrt(forward ** 2 + strafe ** 2)
-
-    # swerve calculations
-    if magnitude > 0.2 and abs(turn) < 0.3:
-        leftTopModule.rotate(globalAngle)
-        leftBottomModule.rotate(globalAngle)
-        rightTopModule.rotate(globalAngle)
-        rightBottomModule.rotate(globalAngle)
-
-    elif abs(turn) > 0.3 and magnitude < 0.2:
-        turn_in_place()
-
-
-    elif abs(turn) > 0.3 and magnitude > 0.2:
-        turn_while_moving(globalAngle, turn)
-    else:
-        turn_in_place()
+    leftTopModule.set_speed(states[0][1], states[0][0])
+    leftBottomModule.set_speed(states[1][1], states[1][0])
+    rightTopModule.set_speed(states[2][1], states[2][0])
+    rightBottomModule.set_speed(states[3][1], states[3][0])
 
     # Draw a solid blue circle in the center
     pygame.draw.rect(screen, (200, 200, 200), (300, 300, 400, 400))
