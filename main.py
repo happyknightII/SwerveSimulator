@@ -23,10 +23,10 @@ rightTopModule = SwerveModule(100, (350 + 300, 350))
 rightBottomModule = SwerveModule(100, (350 + 300, 350 + 300))
 
 kinematics = SwerveKinematics([
-    [-1, 1],
-    [-1, -1],
     [1, 1],
-    [1, -1]
+    [1, -1],
+    [-1, -1],
+    [-1, 1]
 ])
 
 swerveGroup.add(leftTopModule)
@@ -69,10 +69,10 @@ while running:
 
     kinematics.scale_speeds(states)
 
-    leftTopModule.set_speed(states[0][1], states[0][0])
-    leftBottomModule.set_speed(states[1][1], states[1][0])
-    rightTopModule.set_speed(states[2][1], states[2][0])
-    rightBottomModule.set_speed(states[3][1], states[3][0])
+    rightTopModule.set_speed(states[0][1], states[0][0])
+    rightBottomModule.set_speed(states[1][1], states[1][0])
+    leftBottomModule.set_speed(states[2][1], states[2][0])
+    leftTopModule.set_speed(states[3][1], states[3][0])
 
     # Draw a solid blue circle in the center
     pygame.draw.rect(screen, (200, 200, 200), (300, 300, 400, 400))

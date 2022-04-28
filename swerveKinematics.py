@@ -21,8 +21,8 @@ class SwerveKinematics:
     def get_inv_kinematics(self, positions):
         matrix = []
         for i in positions:
-            matrix.append([1, 0, -i[0]])
-            matrix.append([0, 1,  i[1]])
+            matrix.append([1, 0, -i[1]])
+            matrix.append([0, 1,  i[0]])
 
         return np.matrix(matrix)
 
